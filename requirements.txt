@@ -1,0 +1,6 @@
+streamlit
+pandas
+yfinance
+ta
+gspread
+oauth2client
