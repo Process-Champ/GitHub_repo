@@ -1,0 +1,9 @@
+yfinance==0.2.40
+pandas==2.2.2
+numpy==1.26.4
+gspread==6.1.2
+google-auth==2.30.0
+upstox-python-sdk==2.9.0
+pytz==2024.1
+streamlit==1.35.0
+plotly==5.22.0
