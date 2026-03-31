@@ -1,16 +1,16 @@
-# .github/workflows/trading-agent.yml
-# Runs the trading signal agent every 15 min on NSE market days
-# 9:15 AM – 3:30 PM IST = 3:45 AM – 10:00 AM UTC
-
 name: Trading Agent
 
 on:
   schedule:
-    # Every 15 min, Mon–Fri, 03:45–10:00 UTC (= 09:15–15:30 IST)
-    - cron: "*/15 3-9 * * 1-5"
-    - cron: "0-30/15 10 * * 1-5"
+    - cron: "*/15 3 * * 1-5"
+    - cron: "*/15 4 * * 1-5"
+    - cron: "*/15 5 * * 1-5"
+    - cron: "*/15 6 * * 1-5"
+    - cron: "*/15 7 * * 1-5"
+    - cron: "*/15 8 * * 1-5"
+    - cron: "*/15 9 * * 1-5"
+    - cron: "0,15,30 10 * * 1-5"
 
-  # Allow manual trigger from GitHub Actions tab (useful for testing)
   workflow_dispatch:
 
 jobs:
@@ -36,11 +36,3 @@ jobs:
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
           UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
         run: python agent.py
-
-      - name: Upload run log as artifact
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: agent-log-${{ github.run_number }}
-          path: "*.log"
-          retention-days: 7
