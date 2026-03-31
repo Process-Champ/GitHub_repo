@@ -1,4 +1,3 @@
-“””
 Trading Signal Agent - Nifty 50 Top 10
 Runs via GitHub Actions every 15 min during market hours (9:15 AM - 3:30 PM IST, Mon-Fri)
 Writes buy/sell/hold signals to Google Sheets
