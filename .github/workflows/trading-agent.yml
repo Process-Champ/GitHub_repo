@@ -1,22 +1,14 @@
-name: Trading Agent
+name: Trading Signal Agent
 
 on:
   schedule:
-    - cron: "15,30,45 3 * * 1-5"
-    - cron: "0,15,30,45 4 * * 1-5"
-    - cron: "0,15,30,45 5 * * 1-5"
-    - cron: "0,15,30,45 6 * * 1-5"
-    - cron: "0,15,30,45 7 * * 1-5"
-    - cron: "0,15,30,45 8 * * 1-5"
-    - cron: "0,15,30,45 9 * * 1-5"
-    - cron: "0,15,30 10 * * 1-5"
-
-  workflow_dispatch:
+    - cron: '0 * * * *'   # Every hour, 24/7, 365 days
+  workflow_dispatch:        # Manual trigger anytime
 
 jobs:
-  run-agent:
+  run-trading-agent:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
@@ -25,14 +17,24 @@ jobs:
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
-          cache: "pip"
+          python-version: '3.11'
+          cache: 'pip'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install --upgrade pip
+          pip install \
+            pandas \
+            numpy \
+            gspread \
+            google-auth \
+            pytz \
+            requests \
+            upstox-python-sdk
 
       - name: Run trading agent
         env:
           GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
           UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
-        run: python agent.py
+        run: |
+          python agent.py
