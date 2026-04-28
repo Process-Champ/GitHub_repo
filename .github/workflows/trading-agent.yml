@@ -1,7 +1,7 @@
 name: Trading Signal Agent
 
 on:
-  workflow_dispatch:           # ← This allows external cron to trigger it
+  workflow_dispatch:
     inputs:
       reason:
         description: 'Reason for run (from external cron)'
@@ -19,7 +19,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'     # Change if your script needs 3.12
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
@@ -27,9 +27,4 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run Trading Signal Agent
-        run: python trading_agent.py          # ← CHANGE this to your actual Python file name
-        env:
-          # Add your secret keys here (recommended)
-          # API_KEY: ${{ secrets.API_KEY }}
-          # TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
-          # etc.
+        run: python trading_agent.py     # ← CHANGE this if your script has a different name
