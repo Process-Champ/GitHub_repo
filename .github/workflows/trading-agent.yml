@@ -1,40 +1,25 @@
 name: Trading Signal Agent
 
 on:
-  schedule:
-    - cron: '*/20 * * * *'   # Every hour, 24/7, 365 days
-  workflow_dispatch:        # Manual trigger anytime
+  workflow_dispatch:     # This allows external cron + manual trigger
 
 jobs:
   run-trading-agent:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          pip install \
-            pandas \
-            numpy \
-            gspread \
-            google-auth \
-            pytz \
-            requests \
-            upstox-python-sdk
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run trading agent
-        env:
-          GOOGLE_CREDENTIALS_JSON: ${{ secrets.GOOGLE_CREDENTIALS_JSON }}
-          UPSTOX_ACCESS_TOKEN: ${{ secrets.UPSTOX_ACCESS_TOKEN }}
-        run: |
-          python agent.py
+      - name: Run Trading Signal Agent
+        run: python trading_agent.py      # ← Change this to your actual script name
