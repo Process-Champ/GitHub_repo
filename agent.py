@@ -77,22 +77,6 @@ EMA_SLOW = 21
 COOLDOWN_HOURS = 6
 
 # =========================================================
-# MARKET STATUS
-# =========================================================
-
-def market_open():
-    now = datetime.datetime.now(IST)
-
-    if now.weekday() >= 5:
-        return False
-
-    market_open = now.replace(hour=9, minute=15, second=0)
-    market_close = now.replace(hour=15, minute=30, second=0)
-
-    return market_open <= now <= market_close
-
-
-# =========================================================
 # INDICATORS
 # =========================================================
 
