@@ -349,12 +349,6 @@ def run():
     print("Advanced Swing Agent v4")
     print("==============================\n")
 
-    if not market_open():
-
-        print("Market closed. No signals generated.")
-
-        return
-
     sheet = get_sheet()
 
     now = datetime.datetime.now(IST)
